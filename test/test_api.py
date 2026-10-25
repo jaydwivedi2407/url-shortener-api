@@ -115,3 +115,42 @@ def test_expired_link_returns_410(client):
     )
 
     assert response.status_code == 410
+
+
+def test_redirect_to_original_url(client):
+    client.post(
+        "/links",
+        json={
+            "url": "https://example.com",
+            "alias": "testredirect01"
+        }
+    )
+
+    response = client.get(
+        "/testredirect01",
+        follow_redirects=False
+    )
+
+    assert response.status_code == 307
+    assert response.headers["location"] == "https://example.com/"
+
+
+def test_click_count_increases(client):
+    client.post(
+        "/links",
+        json={
+            "url": "https://example.com",
+            "alias": "testclickcount01"
+        }
+    )
+
+    client.get(
+        "/testclickcount01",
+        follow_redirects=False
+    )
+
+    response = client.get("/testclickcount01/stats")
+
+    assert response.status_code == 200
+    assert response.json()["clicks"] == 1
+    assert response.json()["last_clicked"] is not None
