@@ -29,8 +29,8 @@ A simple URL Shortener API built using Python, FastAPI, and SQLite. It allows us
 ### 1. Clone the repository
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
-cd url-shortner
+git clone https://github.com/jaydwivedi2407/url-shortener-api.git
+cd url-shortener-api
 ```
 
 ### 2. Create a virtual environment
